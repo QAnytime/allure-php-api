@@ -35,7 +35,7 @@ trait StepSupport
     {
         $logicResult = null;
 
-        if (isset($name) && is_callable($logic)) {
+        if (isset($name)) {
             $event = new StepStartedEvent($name);
             if (isset($title)) {
                 $event->withTitle($title);
@@ -44,7 +44,7 @@ trait StepSupport
             }
             Allure::lifecycle()->fire($event);
             try {
-                $logicResult = $logic();
+                $logicResult = $logic;
                 Allure::lifecycle()->fire(new StepFinishedEvent());
             } catch (Exception $e) {
                 $stepFailedEvent = new StepFailedEvent();
